@@ -1,0 +1,87 @@
+{% extends "project1s/base.html" %}
+
+{% block title %}
+    show
+{% endblock %}
+
+{% block body %}
+  <h2>{{context.book.title}}</h2>
+  <h3>{{context.book.author}}</h3>
+  <h4>{{context.book.year}}</h4>
+<div style="margin-top: 30px;">
+  <div class="star-rating">
+    <span class="fa fa-star-o own" data-rating="1"></span>
+     <span class="fa fa-star-o own" data-rating="2"></span>
+     <span class="fa fa-star-o own" data-rating="3"></span>
+     <span class="fa fa-star-o own" data-rating="4"></span>
+     <span class="fa fa-star-o own" data-rating="5"></span>
+     <input type="hidden" name="whatever1" class="rating-value" value={{context.rating}}>
+        </div>
+</div>
+
+
+<h6 style="margin-top: 60px;">GOODReadAPI Review</h6>
+  <div style="margin-top: 10px;">
+    <div class="star-rating">
+      <span class="fa fa-star-o goodread" data-rating="1"></span>
+       <span class="fa fa-star-o goodread" data-rating="2"></span>
+       <span class="fa fa-star-o goodread" data-rating="3"></span>
+       <span class="fa fa-star-o goodread" data-rating="4"></span>
+       <span class="fa fa-star-o goodread" data-rating="5"></span>
+       <input type="hidden" name="whatever1" class="rating-value" value={{context.goodreads}}>
+          </div>
+  </div>
+
+      <script>
+      var $star_rating = $('.star-rating .own');
+
+    var SetRatingStar = function() {
+      return $star_rating.each(function() {
+        if (parseInt($star_rating.siblings('input.rating-value').val()) >= parseInt($(this).data('rating'))) {
+          return $(this).removeClass('fa-star-o').addClass('fa-star');
+        } else {
+          return $(this).removeClass('fa-star').addClass('fa-star-o');
+        }
+      });
+    };
+    $star_rating.on('click', function() {
+      $star_rating.siblings('input.rating-value').val($(this).data('rating'));
+      return SetRatingStar();
+    });
+
+    SetRatingStar();
+    $(document).ready(function() {
+      $('.goodread').each(function() {
+       if (parseInt($('.goodread').siblings('input.rating-value').val()) >= parseInt($(this).data('rating'))) {
+         return $(this).removeClass('fa-star-o').addClass('fa-star');
+       } else {
+         return $(this).removeClass('fa-star').addClass('fa-star-o');
+       }
+     });
+        $('.star-rating .fa').on('click',function(){
+            var length = $(this).data('rating');
+            values ={
+              'user_id': {{context.user.id}},
+              'book_id': {{context.book.id}},
+              'length': length
+            };
+              $.ajax({
+                  url: "/rating/",
+                  type: "post",
+                  data: values ,
+                  success: function (response) {
+                     console.log(response)
+
+                  },
+                  error: function(jqXHR, textStatus, errorThrown) {
+                     console.log(textStatus, errorThrown);
+                     console.log("eroro");
+                  }
+
+
+              });
+
+        });
+    });
+      </script>
+{% endblock %}

@@ -1,0 +1,21 @@
+{% extends "project1s/base.html" %}
+
+{% block title %}
+    Book
+{% endblock %}
+
+{% block body %}
+
+
+<h1>Find Any BOOK</h1>
+
+<form class="col-md-8 col-md-offset-2" action="./search" method="get">
+
+  <div class="input-group">
+    <input type="text" class="form-control" size="50" placeholder="ID, Title, Author, Year" name="book_id" required>
+    <div class="input-group-btn">
+      <button type="submit" class="btn btn-danger">Find</button>
+    </div>
+  </div>
+</form>
+{% endblock %}

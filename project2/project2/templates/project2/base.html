@@ -1,0 +1,85 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Project2</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/reconnecting-websocket/1.0.0/reconnecting-websocket.min.js"></script>
+  <script src="{% static 'main.js' %}"></script>
+  <style>
+    /* Remove the navbar's default margin-bottom and rounded borders */
+    .navbar {
+      margin-bottom: 0;
+      border-radius: 0;
+    }
+    body{
+        background:#7b4397;
+        background: -webkit-linear-gradient(to left, #7b4397, #dc2430);
+        background:linear-gradient(to left, #7b4397, #dc2430);
+    }
+    /* Set height of the grid so .sidenav can be 100% (adjust as needed) */
+    .row.content {height: 450px}
+
+    /* Set gray background color and 100% height */
+    .sidenav {
+      padding-top: 20px;
+      background-color: inherit;
+      height: 100%;
+    }
+    #nav
+    {
+      background-color: inherit;
+      border-style: None;
+    }
+    /* On small screens, set height to 'auto' for sidenav and grid */
+    @media screen and (max-width: 767px) {
+      .sidenav {
+        height: auto;
+        padding: 15px;
+      }
+      .row.content {height:auto;}
+    }
+  </style>
+</head>
+<body>
+
+<nav class="navbar navbar-inverse" id="nav">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="#">Logo</a>
+    </div>
+    <div class="collapse navbar-collapse" id="myNavbar">
+      <ul class="nav navbar-nav navbar-right">
+        <div class="btn-group">
+          <a type="button" class="btn dropdown-toggle" id="buttonUserName" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="font-size: 18px;color:white;background-color=transparent">
+            {{user.username}} <span class="caret"></span>
+          </a>
+          <ul class="dropdown-menu logout" style="color:black;background-color:transparent">
+            <li><a id="kk" href="/account/logout"style="background-colort:transparent">Logout</a></li>
+
+          </ul>
+        </div>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+<div class="container-fluid text-center">
+  <div class="row content">
+    <div class="col-sm-8 col-sm-offset-2">
+      {%block body%}
+      {%endblock%}
+    </div>
+  </div>
+</div>
+</body>
+</html>

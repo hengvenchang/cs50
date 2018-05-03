@@ -1,0 +1,53 @@
+{% extends "project1s/base.html" %}
+
+{% block title %}
+    search
+{% endblock %}
+
+{% block body %}
+
+<h1>here are result {{context.count}}</h1>
+
+{% if context.count >= 1 %}
+  <ul>
+    <table class="table table-bordered" id="tableResult" >
+    <thead>
+      <tr>
+        <th>Title</th>
+        <th>Author</th>
+        <th>Year</th>
+      </tr>
+    </thead>
+    <tbody >
+      {% for book in context.books %}
+        <tr>
+
+          <td><a href="{{book.id}}"></a>{{book.title}}</td>
+          <td>{{book.author}}</td>
+          <td>{{book.year}}</td>
+        </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+
+  </ul>
+{% elif context.count == 0 %}
+      <h2>NO Result</h2>
+{% endif %}
+<script>
+$(document).ready(function() {
+    var url = 'http://localhost:8000/book/'
+    $('#tableResult tr').click(function() {
+      var href = $(this).find("a").attr("href");
+      if(href) {
+        var location = url + href;
+        window.location = location;
+      }
+    });
+
+})
+
+</script>
+{% endblock %}
+{% block scripts %}
+{% endblock %}

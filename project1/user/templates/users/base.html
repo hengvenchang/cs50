@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Book</title>
+
+    <!-- Bootstrap core CSS -->
+
+    <!-- Custom fonts for this template -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <style>
+    #pagetop{
+      background-color: #f4511e;
+    }
+    .navbar {
+        margin-bottom: 0;
+        background-color: #f4511e;
+        z-index: 1;
+        border: 0;
+        font-size: 12px !important;
+        line-height: 1.42857143 !important;
+        letter-spacing: 4px;
+        border-radius: 0;
+        font-family: Montserrat, sans-serif;
+    }
+    .navbar li a, .navbar .navbar-brand {
+        color: #fff !important;
+    }
+
+    .jumbotron {
+        background-color: #f4511e;
+        color: #fff;
+        padding: 100px 25px;
+        font-family: Montserrat, sans-serif;
+    }
+    .container-fluid {
+        padding: 60px 50px;
+    }
+    #buttonUserName:visited {
+    color: green;
+}
+    #buttonUserName:hover{
+      background-color: transparent;
+    }
+    .logout:hover{
+      background-color: transparent;
+    }
+    .logout:hover{
+      background-color: transparent;
+    }
+    .logoutButton:hover{
+      background-color: transparent;
+    }
+    .navbar-default .navbar-nav>.open>a, .navbar-default .navbar-nav>.open>a:focus, .navbar-default .navbar-nav>.open>a:hover {
+        color: #555;
+        background-color: transparent;
+    }
+    #kk:hover{
+      background-color: transparent;
+    }
+    </style>
+  </head>
+
+  <body id="pagetop">
+
+
+    <nav class="navbar navbar-default navbar-fixed-top">
+      <div class="container">
+        <div class="navbar-header">
+          <a class="navbar-brand">Logo</a>
+        </div>
+        <div class="collapse navbar-collapse" id="myNavbar">
+          <ul class="nav navbar-nav navbar-right logoutButton">
+            <div class="btn-group">
+              <a type="button" class="btn dropdown-toggle" id="buttonUserName" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="font-size: 18px;color:white;background-color=transparent">
+                {{user.username}} <span class="caret"></span>
+              </a>
+              <ul class="dropdown-menu logout" style="color:black;background-color:transparent">
+                <li><a id="kk" style="background-colort:transparent">Logout</a></li>
+
+              </ul>
+            </div>
+          </ul>
+        </div>
+      </div>
+    </nav>
+
+    <div class="jumbotron text-center">
+      {% block body %}
+      {% endblock %}
+
+    </div>
+  </body>
+
+</html>

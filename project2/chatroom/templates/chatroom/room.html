@@ -1,0 +1,81 @@
+{% extends "project2/base.html" %}
+{%block body%}
+
+<div class="row text-center" data-room-id={{context.room.id}} id = "room">
+  <h1>{{context.room.title}}</h1>
+  <div>
+    <div class="pre-scrollable" id="chatroomDisplay" style="height:340px;">
+
+    </div>
+  </div>
+<div style="margin-top:30px;">
+  <div class="input-group">
+     <input type="text" class="form-control" name="text" value="" id="textMessage">
+     <span class="input-group-btn">
+          <button type="button" class="btn btn-primary" name="button" id="sendButton">send</button>
+     </span>
+  </div>
+</div>
+
+</div>
+<script>
+$(document).ready(function() {
+    // Correctly decide between ws:// and wss://
+    var ws_scheme = window.location.protocol == "https:" ? "wss" : "ws";
+    var ws_path = ws_scheme + '://' + window.location.host + "/chat/stream/";
+    console.log("Connecting to " + ws_path);
+    var socket = new ReconnectingWebSocket(ws_path);
+    roomId = $('#room').attr("data-room-id");
+    // Helpful debugging
+    socket.onopen = function () {
+        console.log("Connected to chat socket");
+
+        console.log(roomId)
+        socket.send(JSON.stringify({
+          "command": "join",  // determines which handler will be used (see chat/routing.py)
+          "room": roomId
+      }));
+    };
+
+
+    socket.onclose = function () {
+        console.log("Disconnected from chat socket");
+    }
+
+    //on message
+    socket.onmessage = function (message) {
+    console.log("Got websocket message " + message.data);
+    var data = JSON.parse(message.data);
+    var element = '<div>'+
+                  '<span>'+ data.username + '</span>' +
+                  ': <span>'+ data.message + '</span>' +
+                  '</div>'
+    console.log(data.room);
+    if(data.msg_type == 0){
+        $('#chatroomDisplay').append(element);
+    }
+  }
+      $('#sendButton').on('click',function(){
+
+        sendMessage();
+
+      });
+      $('#textMessage').keypress(function(event){
+        var keycode = (event.keyCode ? event.keyCode : event.which);
+        if(keycode == '13'){
+           sendMessage();
+        }
+    });
+    function sendMessage() {
+      var messageText = $('#textMessage').val();
+      socket.send(JSON.stringify({
+                "command": "send",
+                "room": roomId,
+                "message": messageText
+            }));
+    }
+
+});
+
+</script>
+{%endblock%}

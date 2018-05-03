@@ -1,0 +1,15 @@
+{% extends "project2/base.html" %}
+{%block body%}
+
+<div class="row text-center">
+  <div style="margin-top:30px;">
+    <form class="input-group" action="create" method="post">
+      {% csrf_token %}
+       <input type="text" class="form-control" name="room_title" value="" id="room_title">
+       <span class="input-group-btn">
+            <button type="submit" class="btn btn-primary" name="button" id="submit">Create</button>
+       </span>
+    </form>
+  </div>
+</div>
+{%endblock%}

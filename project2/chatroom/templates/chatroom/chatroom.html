@@ -1,0 +1,44 @@
+{% extends "project2/base.html" %}
+{%block body%}
+
+<div class="row text-center">
+  <div class="col-md-10">
+      <h2>ChatRooms</h2>
+  </div>
+  <div class="col-md-offset-2 align-middle" style="margin-top: 15px;">
+    <form action="./new">
+      <input type="submit" value="New"class="btn btn-primary align-middle" />
+    </form>
+  </div>
+    <!-- <ul>
+      {% for room in context.rooms %}
+        <li data-room-id="{{ room.id }}"> {{room.title}}</li>
+      {% endfor %}
+    </ul> -->
+    <div style="margin-top:30px;">
+       {% for room in context.rooms %}
+          <div class="text-center" style = "text-align: center;vertical-align: middle; margin-top:10px;">
+            <button class="room-link btn btn-primary" data-room-id="{{ room.id }}" style = "    margin-left: -140px;width: 200px;text-align: center;vertical-align: middle;">
+                {{ room.title }}
+              </button>
+          </div>
+
+       {% empty %}
+           <p class="empty">No chat rooms defined. Maybe make some in the <a href="{% url 'admin:index' %}">admin</a>?</p>
+       {% endfor %}
+   </div>
+
+   <div id="chats">
+   </div>
+</div>
+<script>
+$(document).ready(function() {
+  $('#new').on('click',function () {
+    window.location = "http://localhost:8000/chatroom/"
+  });
+  $('.room-link').on('click',function () {
+    window.location = "http://localhost:8000/chatroom/"+ $(this).attr("data-room-id");
+  });
+});
+</script>
+{%endblock%}
