@@ -1,0 +1,38 @@
+{% extends "project3/base.html" %}
+
+{% block body %}
+<a href="/orders">menu</a>
+<div id="menu" class="text-center">
+  <table class="table table-striped" style="color:black;">
+  <thead>
+    <tr>
+      <th>name</th>
+      <th>customer</th>
+      <th>price</th>
+      <th>size</th>
+      <th>status</th>
+    </tr>
+  </thead>
+  <tbody>
+    {%for order in context.orders%}
+      <tr>
+        <td name="name">{{order.name}}</td>
+        <td >{{order.customer}}</td>
+        <td >{{order.price}}</td>
+        <td >{{order.size.name}}</td>
+          {% if order.status == 1%}
+            <td >pending</td>
+          {% elif order.status == 2 %}
+            <td>ready</td>
+          {%else%}
+            <td></td>
+          {%endif%}
+      </tr>
+    {%endfor%}
+
+  </tbody>
+</table>
+</div>
+<script>
+</script>
+{% endblock %}

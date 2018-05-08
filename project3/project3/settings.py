@@ -37,6 +37,10 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'orders',
+    'users',
+    'project3',
+    'menu',
 ]
 
 MIDDLEWARE = [
@@ -47,25 +51,27 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'project3.middleware.LoginRequiredMiddleware',
 ]
 
 ROOT_URLCONF = 'project3.urls'
 
 TEMPLATES = [
-    {
-        'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
-        'APP_DIRS': True,
-        'OPTIONS': {
-            'context_processors': [
-                'django.template.context_processors.debug',
-                'django.template.context_processors.request',
-                'django.contrib.auth.context_processors.auth',
-                'django.contrib.messages.context_processors.messages',
-            ],
-        },
-    },
+    dict(BACKEND='django.template.backends.django.DjangoTemplates',
+    DIRS=[
+        os.path.join(BASE_DIR, 'templates'),
+        os.path.join(BASE_DIR, 'project3/templates'),
+    ], APP_DIRS=True, OPTIONS={
+        'context_processors': [
+            'django.template.context_processors.debug',
+            'django.template.context_processors.request',
+            'django.contrib.auth.context_processors.auth',
+            'django.contrib.messages.context_processors.messages',
+
+        ]
+    }),
 ]
+
 
 WSGI_APPLICATION = 'project3.wsgi.application'
 
@@ -75,8 +81,12 @@ WSGI_APPLICATION = 'project3.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'project3',
+        'USER': 'cheang',
+        'PASSWORD': 'nuttertools',
+        'HOST': 'localhost',
+        'PORT': '',
     }
 }
 
@@ -118,3 +128,15 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/2.0/howto/static-files/
 
 STATIC_URL = '/static/'
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, "static"),
+]
+
+LOGIN_REDIRECT_URL = '/'
+
+LOGIN_URL = '/account/login/'
+
+LOGIN_EXEMPT_URLS = (
+    r'^account/login/$',
+
+)

@@ -1,0 +1,44 @@
+{% extends "project3/base.html" %}
+
+{% block body %}
+<div id="menu" class="text-center">
+   <!-- {% for pi in context.pizzas %}
+    <p style="color:white;">{{pi.name.name}}, {{pi.name.type.type}}, {{pi.price.price}}  $, {{pi.price.size}}</p>
+  {% endfor %} -->
+  <div class="sizeMenu">
+    <p style="color:white">size</p>
+    <button class="btn btnMenu" value="s">
+      16 inch
+    </button>
+    <button class="btn btnMenu" value="l">
+      28 inch
+    </button>
+  </div>
+  <div class="pizaaTypeSelete">
+    <div style="color:white;" >
+      <p class="menuTitle">Type</p>
+      <p class="menuTitle">Pizza</p>
+      <p  class="menuTitle">Topping</p>
+    </div>
+    <select class="selectpicker pizzaType" id="pizzaType">
+
+      {% for type in context.PizzaType %}
+       <option>{{type.type}}</option>
+      {% endfor %}
+
+    </select>
+    <select class="form-control" style="width:35%;display:inline-block;" id = "PizzaPicker">
+
+    </select>
+    <select class="selectpicker menuTopping" style="width:45%;">
+      {% for topping in context.pizzaToppings %}
+      <option>{{topping.topping}}</option>
+      {% endfor %}
+    </select>
+  </div>
+  <div style="color:white;margin-top:20px;">
+    Price: <p id="price"></p>
+    <button type="submit" class="btn btn-primary" name="checkout" id="checkOutButton">Checkout</button>
+  </div>
+</div>
+{% endblock %}

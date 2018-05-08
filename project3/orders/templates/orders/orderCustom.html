@@ -1,0 +1,64 @@
+{% extends "project3/base.html" %}
+
+{% block body %}
+<a href="/orders">menu</a>
+<div id="menu" class="text-center">
+  <table class="table table-striped" style="color:black;">
+  <thead>
+    <tr>
+      <th></th>
+      {% if context.menus.0.price %}
+        <th>price</th>
+      {% else %}
+        <th>Small</th>
+        <th>Large</th>
+      {% endif %}
+    </tr>
+  </thead>
+  <tbody>
+    {%for menu in context.menus%}
+      <tr>
+        <td name="name">{{menu.name}}</td>
+        {% if menu.price %}
+            <td class="price">{{menu.price}}</td>
+        {% else %}
+            <td class="price">{{menu.s_price}}</td>
+            <td class="price">{{menu.l_price}}</td>
+        {% endif %}
+
+      </tr>
+    {%endfor%}
+
+  </tbody>
+</table>
+</div>
+<script>
+$(document).ready(function () {
+  $('.price').on('click',function(){
+    var name = $(this).siblings(":first").text();
+    var price = $(this).text();
+    var data = {
+      'name':name,
+      csrfmiddlewaretoken: '{{ csrf_token }}',
+      'price':price
+    };
+    $.ajax({
+        url: "order",
+        type: "post",
+        data: data ,
+        success: function (response) {
+           // you will get response from your php page (what you echo or print)
+           console.log(response);
+           window.location = 'http://localhost:8000/orders/lists'
+        },
+        error: function(jqXHR, textStatus, errorThrown) {
+           console.log(textStatus, errorThrown);
+        }
+
+
+    });
+    console.log();
+  });
+});
+</script>
+{% endblock %}

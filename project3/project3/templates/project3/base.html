@@ -1,0 +1,226 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title>Pizza</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/reconnecting-websocket/1.0.0/reconnecting-websocket.min.js"></script>
+    <!-- <link href={% static "css/flipper.css" %}> -->
+    <!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.12.4/css/bootstrap-select.min.css">
+
+<!-- Latest compiled and minified JavaScript -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.12.4/js/bootstrap-select.min.js"></script>
+
+<!-- (Optional) Latest compiled and minified JavaScript translation files -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.12.4/js/i18n/defaults-*.min.js"></script>
+
+    <style>
+    body{
+      background-image:url('{% static 'images/bg_header.jpg' %}'); */
+      background-repeat:no-repeat; */
+      background-color:
+    }
+    #container{
+      margin-top: 150px;
+    }
+    .container-fluid {
+        padding: 60px 50px;
+
+    }
+    .well{
+        text-align: center;
+    }
+    #buttonUserName:visited {
+    color: green;
+}
+    #buttonUserName:hover{
+      background-color: transparent;
+    }
+    .logout:hover{
+      background-color: transparent;
+    }
+    .logout:hover{
+      background-color: transparent;
+    }
+    .logoutButton:hover{
+      background-color: transparent;
+    }
+    .navbar-default .navbar-nav>.open>a, .navbar-default .navbar-nav>.open>a:focus, .navbar-default .navbar-nav>.open>a:hover {
+        color: #555;
+        background-color: transparent;
+    }
+    #kk:hover{
+      background-color: transparent;
+    }
+    .star-rating {
+  line-height:32px;
+  font-size:1.25em;
+}
+
+.star-rating .fa-star{color: yellow;}
+    #navigation
+    {
+      background-color: transparent;
+      border-style: none;
+    }
+    .flip-card{
+      margin-right: 15px;
+    }
+    .btnMenu
+    {
+      margin: 10px;
+    }
+    .menuTitle
+    {
+      color:white;
+      display:inline-block;
+       margin: 0px 60px 10px;
+    }
+    </style>
+
+  </head>
+  <body>
+
+
+        <nav class="navbar navbar-default navbar-fixed-top" id="navigation">
+          <div class="container">
+            <div class="navbar-header">
+              <a class="navbar-brand">Logo</a>
+            </div>
+            <div class="collapse navbar-collapse" id="myNavbar">
+              <ul class="nav navbar-nav navbar-right logoutButton">
+                <div class="btn-group">
+                  <a type="button" class="btn dropdown-toggle" id="buttonUserName" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="font-size: 18px;color:white;background-color=transparent">
+                    {{user.username}} <span class="caret"></span>
+                  </a>
+                  <ul class="dropdown-menu logout" style="color:black;background-color:transparent">
+                    <li><a id="kk" href="/account/logout"style="background-colort:transparent">Logout</a></li>
+
+                  </ul>
+                </div>
+              </ul>
+            </div>
+          </div>
+        </nav>
+    <div class="container" id="container">
+      <div class="row">
+        <div class="col-md-11 col-md-offset-1">
+          
+          {%block body%}
+          {%endblock%}
+        </div>
+    </div>
+
+    <div>
+      <script>
+      $(document).ready(function(){
+        var size = "s";
+        var pizzas = {
+          {% for pizza in context.pizzas %}
+            "{{ pizza.id }}":{
+                  type: "{{ pizza.type.type }}",
+                  name: "{{ pizza.name.name }}",
+                  l_price: "{{ pizza.l_price }}",
+                  s_price: "{{ pizza.s_price }}",
+              },
+          {% endfor %}
+        };
+            choosePizzaType();
+            $('#PizzaPicker').trigger('change', true);
+          function choosePizzaType() {
+            $.each(pizzas, function(key, value) {
+              var type = $('#pizzaType').val();
+              if(value.type == type){
+                $('#PizzaPicker').append('<option value={"l_price":'+value.l_price+',"s_price":'+value.s_price+'}>'+value.name+'</option>');
+              }
+          });
+          calculatePrice();
+         };
+
+         $('#pizzaType').on('change',function(){
+           $('#PizzaPicker')
+             .find('option')
+             .remove()
+             .end();
+           choosePizzaType();
+         });
+         $('#checkOutButton').on('click',function () {
+           // console.log("checked out");
+           checkout();
+         });
+         function checkout(){
+           var orderName = $("#PizzaPicker option:selected").text();
+           var price = $('#price').val();
+           var sizeof = size;
+           var data = {
+             'name':orderName,
+             csrfmiddlewaretoken: '{{ csrf_token }}',
+             'price':price,
+             'size':sizeof
+           };
+           $.ajax({
+               url: "order",
+               type: "post",
+               data: data ,
+               success: function (response) {
+                  // you will get response from your php page (what you echo or print)
+                  console.log(response);
+               },
+               error: function(jqXHR, textStatus, errorThrown) {
+                  console.log(textStatus, errorThrown);
+               }
+
+
+           });
+         };
+
+
+
+
+        $('.menuTopping').selectpicker({
+          style: 'btn-danger',
+          size: 10,
+          width:100,
+          });
+          $('.pizzaType').selectpicker({
+            style: 'btn-danger',
+            size: 10,
+            width:100,
+            });
+            $('.pizzaType').on('change',function () {
+
+            });
+            $('.btnMenu').on('click',function () {
+              size = $(this).val();
+              $('.btnMenu').removeClass('btn-primary btnClicked');
+              $(this).addClass('btn-primary btnClicked');
+              calculatePrice();
+            });
+            $('#PizzaPicker').on('change',function(){
+              calculatePrice();
+            });
+
+            function calculatePrice()
+            {
+              // alert("hello");
+              console.log($('#PizzaPicker').val());
+              var price = JSON.parse($('#PizzaPicker').val());
+              // alert(price);
+              var pizzaSize = $('.btnClicked').val();
+              if(pizzaSize == "l"){
+                $('#price').text(price.l_price+"$");
+                $('#price').val(price.l_price);
+              }else {
+                $('#price').text(price.s_price+"$");
+                $('#price').val(price.s_price);
+              }
+
+            }
+    });
+      </script>
+  </body>
+</html>

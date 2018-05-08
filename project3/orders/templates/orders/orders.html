@@ -1,0 +1,44 @@
+{% extends "project3/base.html" %}
+
+{% block body %}
+<div id="menu" style="display: inline-block;">
+  <div class="flip-card" style="display: inline-block" data-item-type="pizza">
+
+        <div class="well">
+        <img style="height:150px; " src="https://www.metro.ca/userfiles/image/recipes/pizza-saucisse-piquante-2301.jpg" alt="">
+        </div>
+      </div>
+      <div class="flip-card" style="display: inline-block" data-item-type="pasta">
+            <div class="well">
+              <img style="height:150px;width: 170px;" src="https://www.seriouseats.com/recipes/images/2016/08/20160827-cherry-tomato-pasta-13-1500x1125.jpg" alt="">
+            </div>
+          </div>
+          <div class="flip-card" style="display: inline-block" data-item-type="salad">
+
+                <div class="well" >
+                  <img style="height:150px;" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSCBa-dsBEwKffgc9jgAypo7ctJLo2x1pq9HGDaqaFzGdtb_vD54A" alt="">
+                </div>
+              </div>
+              <div class="flip-card" style="display: inline-block" data-item-type="subs">
+
+                    <div class="well">
+                      <img style="height:150px;" src="https://jonsmithsubs.com/img/deli.jpg" alt="" >
+                    </div>
+                  </div>
+                  <div class="flip-card" style="    width: 259px;    margin-left: 270px;" data-item-type="dinner_platter">
+
+                        <div class="well">
+                            <img style="height:150px;" src="https://www.kitchentreaty.com/wp-content/uploads/2014/06/Meze-Platter.jpg" alt="">
+                        </div>
+                      </div>
+</div>
+<script>
+$(document).ready(function () {
+  $('.flip-card').on('click',function() {
+    // // alert("hellowrod");
+    // alert($(this).attr('data-item-type'));
+    window.location = './'+ $(this).attr('data-item-type');
+  })
+})
+</script>
+{% endblock %}
